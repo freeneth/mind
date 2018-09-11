@@ -1,0 +1,197 @@
+.-dialog.-event-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes confirm-box-show {
+  0%   {
+    opacity: 0;
+    transform: translateY(30px) translateZ(0);
+  }
+  100% {
+    opacity: 100;
+    transform: translateY(0) translateZ(0);
+  }
+}
+
+.-dialog .-confirm-box {
+  $themeColor: #00a0e9;
+
+  display: flex;
+  flex-direction: column;
+  width: 430px;
+  background-color: white;
+  color: #323232;
+  box-shadow: 0 0 20px #888888;
+  animation: confirm-box-show .35s cubic-bezier(.71,-.46,.29,1.46);
+
+  .-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    color: white;
+    background-color: $themeColor
+  }
+  .-close {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    &:before, &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 26px;
+      height: 2px;
+      background-color: #FFFFFFEE;
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+    &:after {
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+    }
+  }
+  .-content {
+    padding: 42px 0 13px 0;
+    font-size: 16px;
+    text-align: center;
+    user-select: none;
+    .-input {
+      width: 360px;
+      height: 40px;
+      outline: none;
+      padding-left: 15px;
+      border: 1px solid #dddee1;
+      &:hover, &:focus {
+        border-color: #57a3f3;
+        transition: border .2s ease-in-out, box-shadow .2s ease-in-out
+      }
+      &:focus {
+        outline: 0;
+        box-shadow: 0 0 0 1px rgba(45, 140, 240, .2);
+      }
+    }
+  }
+  .-op-bar {
+    display: flex;
+    justify-content: center;
+    margin: 18px 0;
+  }
+  .-ensure-button, .-cancel-button {
+    width: 100px;
+    height: 32px;
+
+    text-align: center;
+    line-height: 32px;
+    border-radius: 6px;
+    font-size: 14px;
+    user-select: none;
+    cursor: pointer;
+    border: 0;
+    outline: none;
+    transition: background-color 0.15s cubic-bezier(.71,-.46,.29,1.46);
+  }
+  .-ensure-button {
+    color: white;
+    background-color: $themeColor;
+    &:hover {
+      background-color: color($themeColor blackness(15%));
+    }
+  }
+  .-cancel-button {
+    margin-left: 92px;
+    border: 1px solid #e1e1e1;
+    background-color: #fff;
+    &:hover {
+      background-color: #e5e5e5;
+    }
+  }
+}
+
+.-preview-box {
+  $borderWidth: 20px;
+  position: fixed;
+  left: $borderWidth;
+  right: $borderWidth;
+  top: $borderWidth;
+  bottom: $borderWidth;
+
+  width: auto !important;
+  background-color: transparent !important;
+
+  .-title {
+    .-close {
+      justify-self: flex-end;
+    }
+  }
+
+  .-content {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 0!important;
+
+    .-button {
+      box-sizing: border-box;
+      width: 80px;
+      height: 80px;
+      text-align: center;
+      line-height: 80px;
+      border-radius: 50%;
+      margin: 15px;
+      flex: none;
+      z-index: 9;
+
+      transition: background-color .3s ease-in-out;
+      cursor: pointer;
+      background-color: rgba(31, 45, 61, .11);
+
+      .-arrow {
+        $size: 22px;
+        $baseColor: #ffffff;
+
+        display: inline-block;
+        width: $size;
+        height: $size;
+        border-right: 3px solid $baseColor;
+        border-bottom: 3px solid $baseColor;
+
+        transition: transform .25s cubic-bezier(.71, -.46, .29, 1.46);
+        transform: rotate(-45deg);
+        transform-origin: center;
+      }
+      &:hover, &:active {
+        background-color: rgba(31, 45, 61, .23);
+      }
+
+      &.-backward .-arrow {
+        transform: rotate(135deg) translate(8%, -35%);
+      }
+      &.-forward .-arrow {
+        transform: rotate(-45deg) translate(-40%, 5%);
+      }
+    }
+
+    .-component-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: calc(100vw - 276px);
+      height: calc(100vh - 184px);
+      overflow: hidden;
+      position: relative;
+    }
+  }
+}

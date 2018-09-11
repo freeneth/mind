@@ -1,0 +1,103 @@
+@startuml
+[*] --> OBSERVE
+OBSERVE: + click on canvas
+OBSERVE: + mouse scroll
+OBSERVE: + home key
+OBSERVE --> OBSERVE
+OBSERVE: + to OB_MENU: right click on canvas
+OBSERVE --> OB_MENU
+OBSERVE: + to CANVAS_MOVE: mouse down and move
+OBSERVE --> CANVAS_MOVE
+OBSERVE: + to TREE_EDIT: click on tree
+OBSERVE: + to TREE_EDIT: click on expand
+OBSERVE: + to TREE_EDIT: undo key
+OBSERVE: + to TREE_EDIT: redo key
+OBSERVE --> TREE_EDIT
+
+OB_MENU: + to OBSERVE: click backdrop
+OB_MENU: + to OBSERVE: click item: reposition tree
+OB_MENU: + to OBSERVE: esc key
+OB_MENU --> OBSERVE
+
+OB_MENU: + to TREE_EDIT: click item: undo
+OB_MENU: + to TREE_EDIT: click item: redo
+OB_MENU --> TREE_EDIT
+
+CANVAS_MOVE: + mouse move
+CANVAS_MOVE --> CANVAS_MOVE
+CANVAS_MOVE: + to OBSERVE: mouse up
+CANVAS_MOVE --> OBSERVE
+
+state TREE_EDIT {
+	TREE_EDIT: + arrow keys
+	TREE_EDIT: + click on tree
+	TREE_EDIT: + click expand
+	TREE_EDIT: + create tree: tab, insert key
+	TREE_EDIT: + create tree: enter key
+	TREE_EDIT: + edit tree: backspace
+	TREE_EDIT: + edit tree: home key
+	TREE_EDIT: + edit tree: undo key
+	TREE_EDIT: + edit tree: redo key
+	TREE_EDIT: + edit tree: cut key
+	TREE_EDIT: + edit tree: copy key
+	TREE_EDIT: + edit tree: paste key
+	TREE_EDIT --> TREE_EDIT
+
+	TREE_EDIT: + to OBSERVE: click canvas
+	TREE_EDIT: + to OBSERVE: input text blur
+	TREE_EDIT -> OBSERVE
+
+	TREE_EDIT: + to TE_MENU: right click on tree
+	[*] --> TE_MENU
+	TREE_EDIT: + to TE_CANVAS_MOVE: mouse down and move on root
+	[*] --> TE_CANVAS_MOVE
+	TREE_EDIT: + to TE_ATTACH_MOVE: mouse down and move on non-root
+	[*] --> TE_ATTACH_MOVE
+	TREE_EDIT: + to TE_INPUT_TEXT: !pluginBinded && double click on tree
+	TREE_EDIT: + to TE_INPUT_TEXT: !pluginBinded && input text
+	[*] --> TE_INPUT_TEXT
+	TREE_EDIT: + to TE_PLUGIN_UI: click bind plugin
+	TREE_EDIT: + to TE_PLUGIN_UI: pluginBinded && double click
+	[*] --> TE_PLUGIN_UI
+
+	TE_MENU: + to TREE_EDIT: esc key
+	TE_MENU: + to TREE_EDIT: click backdrop
+	TE_MENU: + to TREE_EDIT: create tree: click item: create child
+	TE_MENU: + to TREE_EDIT: create tree: click item: create sibling
+	TE_MENU: + to TREE_EDIT: edit tree: click item: delete
+	TE_MENU: + to TREE_EDIT: edit tree: click item: cut
+	TE_MENU: + to TREE_EDIT: edit tree: click item: copy
+	TE_MENU: + to TREE_EDIT: edit tree: click item: paste
+	TE_MENU --> [*]
+	TE_MENU: + to TE_IMPORT: click item: import
+	TE_MENU --> TE_IMPORT
+
+	TE_CANVAS_MOVE: + to TREE_EDIT: mouse up
+	TE_CANVAS_MOVE --> [*]
+
+	TE_ATTACH_MOVE: + to TREE_EDIT: mouse up on canvas
+	TE_ATTACH_MOVE: + mouseup on tree: insert before
+	TE_ATTACH_MOVE: + mouseup on tree: append as child
+	TE_ATTACH_MOVE: + mouseup on tree: append as sibling
+	TE_ATTACH_MOVE: + mouseup on tree: invalid
+	TE_ATTACH_MOVE --> [*]
+	TE_ATTACH_MOVE: + to TE_ATTACH_MOVE: mouse move
+	TE_ATTACH_MOVE --> TE_ATTACH_MOVE
+
+	TE_INPUT_TEXT: + to TREE_EDIT: esc key
+	TE_INPUT_TEXT: + to TREE_EDIT: enter key
+	TE_INPUT_TEXT: + to TREE_EDIT: click on canvas
+	TE_INPUT_TEXT: + to TREE_EDIT: input text blur
+	TE_INPUT_TEXT --> [*]
+
+	TE_PLUGIN_UI: operate inside PluginUI
+	TE_PLUGIN_UI --> TE_PLUGIN_UI
+	TE_PLUGIN_UI: + to TREE_EDIT: click on canvas
+	TE_PLUGIN_UI --> [*]
+
+	TE_IMPORT: + to TREE_EDIT: click ok
+	TE_IMPORT: + to TREE_EDIT: click cancel
+	TE_IMPORT --> [*]
+}
+
+@enduml
