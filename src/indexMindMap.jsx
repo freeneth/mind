@@ -10,7 +10,7 @@ import {
     mock_getAllPlugins,
 } from './mock.js'
 
-const callbacks = {
+const callbacks1 = {
     saveFile: mock_saveFile,
     loadFile: mock_loadFile,
     setShare: mock_setShare,
@@ -20,4 +20,5 @@ const callbacks = {
     getAllPlugins: mock_getAllPlugins,
 }
 
-init(document.getElementById('root'), callbacks)
+// init(document.getElementById('root'), callbacks)
+export default callbacks1;
